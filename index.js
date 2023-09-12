@@ -10,7 +10,7 @@ const app=express()
 app.use(cors())
 app.use(express.json())
 // ||||||||||||||||||||||||||||||||||||||||||||||
-app.use("/",async(req,res)=>{
+app.get("/",async(req,res)=>{
     res.status(200).json({msg:"Welcome To The YakshAcademy Backend"})
 })
 app.use("/user",authRouter)
