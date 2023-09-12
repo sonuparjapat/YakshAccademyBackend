@@ -16,7 +16,7 @@ authRouter.post("/register",async(req,res)=>{
     if(data){
         res.status(400).json({msg:"This User is already registered"})
     }else if(datawithid){
-        res.status(400).json({msg:"Please Provide a Unique Id"})}else{
+        res.status(400).json({msg:"Given Id is Already Present "})}else{
         try{
             bcrypt.hash(password, 5, async(err, hash)=> {
                 if(hash&&!err){
