@@ -7,9 +7,9 @@ const {  loginmodel } = require("../Medels/AuthenticationModel")
 const authRouter=express.Router()
 // authrouter
 authRouter.post("/register",async(req,res)=>{
-    const {email,password,name,type}=req.body
+    const {email,password,name,type,field}=req.body
     const data=await loginmodel.findOne({email})
-    if(email&&password&&name&&type){
+    if(email&&password&&name&&type&&field){
 
     
     if(data){
@@ -19,7 +19,7 @@ authRouter.post("/register",async(req,res)=>{
             bcrypt.hash(password, 5, async(err, hash)=> {
                 if(hash&&!err){
 
-                    const data=new loginmodel({email,name,password:hash,type})
+                    const data=new loginmodel({email,name,password:hash,type,field})
                     await data.save()
                     res.status(200).json({msg:"Registered Successfully"})
                 }else{
@@ -46,7 +46,7 @@ authRouter.post("/login",async(req,res)=>{
                if(result){
                 var token = jwt.sign({ userId:data._id }, 'masai');
                 
-                res.status(200).json({msg:"Login Successfully",useremail:data.email,"token":token,username:data.name,type:data.type})
+                res.status(200).json({msg:"Login Successfully",useremail:data.email,"token":token,username:data.name,type:data.type,field:data.field})
                }else{
                 res.status(400).json({msg:"Wrong Password"})
                }
