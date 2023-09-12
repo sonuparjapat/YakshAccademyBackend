@@ -7,14 +7,16 @@ const {  loginmodel } = require("../Medels/AuthenticationModel")
 const authRouter=express.Router()
 // authrouter
 authRouter.post("/register",async(req,res)=>{
-    const {email,password,name,type,field}=req.body
+    const {email,password,name,type,field,unqId}=req.body
     const data=await loginmodel.findOne({email})
-    if(email&&password&&name&&type&&field){
+    const datawithid=await loginmodel.findOne({unqId})
+    if(email&&password&&name&&type&&field,unqId){
 
     
     if(data){
         res.status(400).json({msg:"This User is already registered"})
-    }else{
+    }else if(datawithid){
+        res.status(400).json({msg:"Please Provide a Unique Id"})}else{
         try{
             bcrypt.hash(password, 5, async(err, hash)=> {
                 if(hash&&!err){

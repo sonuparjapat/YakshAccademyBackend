@@ -6,7 +6,8 @@ email:{type:String,required:true},
 password:{type:String,required:true},
 name:{type:String,required:true},
 type:{type:String,required:true},
-field:{type:String,required:true}
+field:{type:String,required:true},
+unqId:{type:String,required:true},
 
 })
 
