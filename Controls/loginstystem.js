@@ -21,7 +21,7 @@ authRouter.post("/register",async(req,res)=>{
             bcrypt.hash(password, 5, async(err, hash)=> {
                 if(hash&&!err){
 
-                    const data=new loginmodel({email,name,password:hash,type,field})
+                    const data=new loginmodel({email,name,password:hash,type,field,unqId})
                     await data.save()
                     res.status(200).json({msg:"Registered Successfully"})
                 }else{
@@ -48,7 +48,7 @@ authRouter.post("/login",async(req,res)=>{
                if(result){
                 var token = jwt.sign({ userId:data._id }, 'masai');
                 
-                res.status(200).json({msg:"Login Successfully",useremail:data.email,"token":token,username:data.name,type:data.type,field:data.field})
+                res.status(200).json({msg:"Login Successfully",useremail:data.email,"token":token,username:data.name,type:data.type,field:data.field,unqId:data.unqId})
                }else{
                 res.status(400).json({msg:"Wrong Password"})
                }
