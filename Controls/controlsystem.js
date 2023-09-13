@@ -131,7 +131,7 @@ profileRouter.get("/studentprofile",async(req,res)=>{
     // console.log(instId)
     const data=await studentProfileModel.findOne({"userId":userId })
     // console.log(data)
-  res.status(200).json({msg:data
+  res.status(200).json({msg:data?data:[]
 })
 
 
