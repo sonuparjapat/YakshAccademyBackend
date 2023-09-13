@@ -6,7 +6,9 @@ const userSchema=mongoose.Schema({
     department:{type:String,required:true},
     mob:{type:String,required:true},
     email:{type:String,required:true},
-    
+    unqId:{type:String,required:true},
+    dob:{type:String,requuired:true},
+    type:{type:String,required:true},
     date:String,
    userId:String
 })
