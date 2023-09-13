@@ -12,7 +12,7 @@ profileRouter.get("/instructerprofile",async(req,res)=>{
  
     const data=await instructerProfileModel.findOne({"userId":userId })
     // console.log(data)
-  res.status(200).json({msg:data
+  res.status(200).json({msg:data?data:[]
 })
 
 
