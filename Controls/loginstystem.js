@@ -5,7 +5,9 @@ const jwt=require("jsonwebtoken")
 
 const {  loginmodel } = require("../Medels/AuthenticationModel")
 const authRouter=express.Router()
+// starting
 // authrouter
+
 authRouter.post("/register",async(req,res)=>{
     const {email,password,name,type,field,unqId}=req.body
     const data=await loginmodel.findOne({email})
