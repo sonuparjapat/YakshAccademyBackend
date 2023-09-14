@@ -19,6 +19,7 @@ res.status(200).json({msg:"You added a new assignment successfully"})
 })
 assignmentRouter.get("/allinstructerassignment",async(req,res)=>{
 const {date,deadline,name,limit,page,order,sort}=req.query
+console.log(req.query)
 const {userId}=req.body
 const myquery={}
 if(date){
@@ -38,7 +39,7 @@ if(userId){
 try{
     if(page&&limit){
 
-    const maindata=instructerassignmentModel.find(myquery)
+    const maindata=await instructerassignmentModel.find(myquery)
 const data=await instructerassignmentModel.find(myquery).sort({[sort]:order=="asc"?"1":order=="desc"?"-1":""}).skip((page-1)*limit).limit(limit)
 res.status(200).json({msg:data,totalpages:Math.ceil(maindata.length/limit)}) }else{
     const data=await instructerassignmentModel.find(myquery).sort({[sort]:order=="asc"?"1":order=="desc"?"-1":""})
