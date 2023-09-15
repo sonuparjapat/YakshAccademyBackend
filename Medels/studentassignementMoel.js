@@ -4,6 +4,7 @@ const studentassignmentschema=mongoose.Schema({
     link:String,
     status:Boolean,
     name:String,
+    field:String,
     instId:String,
     assignmentId:String,
     submissiondate:String,
