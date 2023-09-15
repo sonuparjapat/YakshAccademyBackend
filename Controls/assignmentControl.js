@@ -54,9 +54,12 @@ catch(err){
 })
 assignmentRouter.get("/getinstructerassignment/:id",async(req,res)=>{
     const {id}=req.params
+    // console.log(id)
     const data=await instructerassignmentModel.findOne({"_id":id})
+  
     if(data){
         try{
+            // console.log(data)
             res.status(200).json({msg:data})
         }catch(err){
             res.status(400).json({msg:"something went wrong"})
@@ -139,7 +142,7 @@ if(name){
     myquery.name={ $regex: name, $options: "i" }
 }
 const userprofile=  studentProfileModel.findOne({"userId":userId})
-const studentfield=userprofile.major
+const studentfield=userprofile.field
 if(studentfield){
     myquery.type=studentfield
 }
