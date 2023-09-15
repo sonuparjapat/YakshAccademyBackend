@@ -56,15 +56,15 @@ assignmentRouter.get("/getinstructerassignment/:id",async(req,res)=>{
     const {id}=req.params
     const data=await instructerassignmentModel.findOne({"_id":id})
     if(data){
-
+        try{
+            res.status(200).json({msg:data})
+        }catch(err){
+            res.status(400).json({msg:"something went wrong"})
+        }
     }else{
         res.status(400).json({msg:"No information available"})
     }
-    try{
-        res.status(200).json({msg:data})
-    }catch(err){
-        res.status(400).json({msg:"something went wrong"})
-    }
+  
 })
 
 assignmentRouter.delete("/deleteassignment/:id",async(req,res)=>{
