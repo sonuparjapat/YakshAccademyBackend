@@ -19,7 +19,7 @@ res.status(200).json({msg:"You added a new assignment successfully"})
 })
 assignmentRouter.get("/allinstructerassignment",async(req,res)=>{
 const {date,deadline,name,limit,page,order,sort}=req.query
-console.log(req.query)
+// console.log(req.query)
 const {userId}=req.body
 const myquery={}
 if(date){
