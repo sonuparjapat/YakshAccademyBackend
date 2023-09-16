@@ -133,7 +133,7 @@ assignmentRouter.patch("/patchassignment/:id",async(req,res)=>{
 
 assignmentRouter.get("/getassignments",async(req,res)=>{
 const {userId}=req.body
-const {sort,order,limit,page,date,name}=req.query
+const {sort,order,limit,page,date,name,deadline}=req.query
 const myquery={}
 if(date){
     myquery.date=date
@@ -141,6 +141,10 @@ if(date){
 if(name){
     myquery.name={ $regex: name, $options: "i" }
 }
+if(deadline){
+    myquery.deadline=deadline
+}
+
 const userprofile=  await studentProfileModel.findOne({"userId":userId})
 // console.log(userprofile,"userprofile")
 const studentfield=userprofile.field
@@ -148,6 +152,7 @@ const studentfield=userprofile.field
 if(studentfield){
     myquery.field=studentfield
 }
+
 if(userprofile){
     try{
 
