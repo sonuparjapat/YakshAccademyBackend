@@ -141,7 +141,7 @@ if(date){
 if(name){
     myquery.name={ $regex: name, $options: "i" }
 }
-const userprofile=  studentProfileModel.findOne({"userId":userId})
+const userprofile=  await studentProfileModel.findOne({"userId":userId})
 const studentfield=userprofile.field
 if(studentfield){
     myquery.type=studentfield
@@ -152,7 +152,8 @@ if(userprofile){
 if(limit&&page){
     const maindata=await instructerassignmentModel.find(myquery)
     const assignmentdata=await instructerassignmentModel.find(myquery).sort({[sort]:order=="asc"?"1":order=="desc"?"-1":""}).skip((page-1)*limit).limit(limit)
-    res.status(200).json({msg:assignmentdata,totalpages:Math.ceil(maindata.length/limit)}) }else{
+    res.status(200).json({msg:assignmentdata,totalpages:Math.ceil(maindata.length/limit)}) }
+    else{
         const data=await instructerassignmentModel.find(myquery).sort({[sort]:order=="asc"?"1":order=="desc"?"-1":""})
         res.status(200).json({msg:data})}
      
