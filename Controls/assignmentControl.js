@@ -142,9 +142,11 @@ if(name){
     myquery.name={ $regex: name, $options: "i" }
 }
 const userprofile=  await studentProfileModel.findOne({"userId":userId})
+// console.log(userprofile,"userprofile")
 const studentfield=userprofile.field
+// console.log(studentfield,"studentfield")
 if(studentfield){
-    myquery.type=studentfield
+    myquery.field=studentfield
 }
 if(userprofile){
     try{
