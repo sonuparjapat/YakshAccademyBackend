@@ -169,6 +169,8 @@ if(limit&&page){
     }catch(err){
         res.status(400).json({"msg":"something going wroing"})
     }
+}else{
+    res.status(400).json({msg:"Please Create Profile first"})
 }
 
 
