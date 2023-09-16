@@ -144,7 +144,7 @@ if(name){
 if(deadline){
     myquery.deadline=deadline
 }
-
+// console.log(myquery)
 const userprofile=  await studentProfileModel.findOne({"userId":userId})
 // console.log(userprofile,"userprofile")
 const studentfield=userprofile.field
