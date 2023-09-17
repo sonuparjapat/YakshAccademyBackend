@@ -3,7 +3,8 @@ const mongoose=require("mongoose")
 const studentassignmentschema=mongoose.Schema({
     link:String,
     status:Boolean,
-    name:String,
+    studentname:String,
+    assignmentname:String,
     field:String,
     instId:String,
     assignmentId:String,

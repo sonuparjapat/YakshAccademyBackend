@@ -197,18 +197,7 @@ assignmentRouter.post("/submitassignment",async(req,res)=>{
     const {assignmentId}=req.body
     await studentassignemntModel.findOneAndDelete({"assignmentId":assignmentId})
 
-
-    
-    
-
-
-
-
-
-
-
-
-    try{
+   try{
         const data=new studentassignemntModel(newdata)
         await data.save()
         res.status(200).json({msg:"Assignment submitted successfully"})
