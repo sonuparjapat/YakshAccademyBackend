@@ -207,9 +207,10 @@ assignmentRouter.post("/submitassignment",async(req,res)=>{
 })
 // submittion status is complete or not 
 
-assignmentRouter.get("/submittedassignment",async(req,res)=>{
+assignmentRouter.get("/submittedassignment/:assignmentId",async(req,res)=>{
   
-    const {userId,assignmentId}=req.body
+    const {userId}=req.body
+    const {assignmentId} =req.params
     const data=await studentassignemntModel.findOne({assignmentId,userId})
     if(data){
         try{
