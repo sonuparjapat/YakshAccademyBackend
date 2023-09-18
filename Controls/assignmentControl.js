@@ -205,7 +205,22 @@ assignmentRouter.post("/submitassignment",async(req,res)=>{
         res.status(400).json({msg:"something going wrong"})
     }
 })
+// submittion status is complete or not 
 
+assignmentRouter.get("/submittedassignment",async(req,res)=>{
+  
+    const {userId,assignmentId}=req.body
+    const data=await studentassignemntModel.findOne({assignmentId,userId})
+    if(data){
+        try{
+            res.status(200).json({msg:data.status})
+        }catch(err){
+            res.status(400).json({msg:"something going wrong"})
+        }
+    }else{
+res.status(200).json({msg:"No Submitted yet"})
+    }
+})
 // status completion
 assignmentRouter.patch("/statuschange/:id",async(req,res)=>{
 
