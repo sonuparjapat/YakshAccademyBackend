@@ -254,7 +254,7 @@ const formattedCurrentDate = `${year}-${month}-${day}`;
         if(req.body.userId==data.userId){
             if (formattedCurrentDate < deadline) {
                 const newdata={...req.body,"submissiondate":formattedCurrentDate,"assignmentTime":"submitted on/before deadline",status:true}
-                await studentassignemntModel.findOneAndUpdate({_id:id},newdata)
+                await studentassignemntModel.findOneAndUpdate({assignmentId:id,userId},newdata)
 
 
                 res.status(200).json({msg:`assignment with  completed on/before time`})
@@ -267,14 +267,14 @@ const formattedCurrentDate = `${year}-${month}-${day}`;
                 // Calculate how many days the assignment is late
                 const daysLate = Math.floor(timeDifferenceMs / (1000 * 60 * 60 * 24));
                 const newdata={...req.body,"submissiondate":formattedCurrentDate,"assignmentTime":`submitted  ${daysLate} days late`,status:true}
-                await studentassignemntModel.findOneAndUpdate({_id:id},newdata)
+                await studentassignemntModel.findOneAndUpdate({assignmentId:id,userId},newdata)
 
 
                 res.status(200).json({msg:`assignment  completed ${daysLate} ${daysLate<10?"day":"days"} late`})
                 // console.log(`It is ${daysLate} days late.`);
             } else {
                 const newdata={...req.body,"submissiondate":formattedCurrentDate,"assignmentTime":"submitted on time",status:true}
-                await studentassignemntModel.findOneAndUpdate({_id:id},newdata)
+                await studentassignemntModel.findOneAndUpdate({assignmentId:id,userId},newdata)
 
 
                 res.status(200).json({msg:`assignment completed on time`})
