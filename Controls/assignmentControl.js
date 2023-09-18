@@ -270,7 +270,7 @@ const formattedCurrentDate = `${year}-${month}-${day}`;
                 await studentassignemntModel.findOneAndUpdate({_id:id},newdata)
 
 
-                res.status(200).json({msg:`assignment  completed ${daysLate} ${daysLate<10?"day":days} late`})
+                res.status(200).json({msg:`assignment  completed ${daysLate} ${daysLate<10?"day":"days"} late`})
                 // console.log(`It is ${daysLate} days late.`);
             } else {
                 const newdata={...req.body,"submissiondate":formattedCurrentDate,"assignmentTime":"submitted on time",status:true}
