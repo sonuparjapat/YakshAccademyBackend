@@ -227,10 +227,14 @@ res.status(200).json({msg:"No Submitted yet"})
 assignmentRouter.patch("/statuschange/:id",async(req,res)=>{
 
     const {id}=req.params
-    const data=await studentassignemntModel.findOne({"_id":id})
+    const {userId}=req.body
+    // console.log(id)
+    const data=await studentassignemntModel.findOne({"assignmentId":id,userId})
+    // console.log(data)
     const {assignmentId}=data
     const instructerassignment=await instructerassignmentModel.findOne({_id:assignmentId})
     const {deadline}=instructerassignment
+    // console.log(deadline)
 // Get the current date in "yyyy-mm-dd" format
 const currentDate = new Date();
 const year = currentDate.getFullYear();
@@ -253,7 +257,7 @@ const formattedCurrentDate = `${year}-${month}-${day}`;
                 await studentassignemntModel.findOneAndUpdate({_id:id},newdata)
 
 
-                res.status(200).json({msg:`assignment with id:${id} completed on/before time`})
+                res.status(200).json({msg:`assignment with  completed on/before time`})
                 // console.log('Assignment is not late.');
 
             } else if (formattedCurrentDate > deadline) {
@@ -266,14 +270,14 @@ const formattedCurrentDate = `${year}-${month}-${day}`;
                 await studentassignemntModel.findOneAndUpdate({_id:id},newdata)
 
 
-                res.status(200).json({msg:`assignment  completed ${daysLate} days late`})
+                res.status(200).json({msg:`assignment  completed ${daysLate} ${daysLate<10?"day":days} late`})
                 // console.log(`It is ${daysLate} days late.`);
             } else {
                 const newdata={...req.body,"submissiondate":formattedCurrentDate,"assignmentTime":"submitted on time",status:true}
                 await studentassignemntModel.findOneAndUpdate({_id:id},newdata)
 
 
-                res.status(200).json({msg:`assignment with id:${id} completed on time`})
+                res.status(200).json({msg:`assignment completed on time`})
             }
 
 
