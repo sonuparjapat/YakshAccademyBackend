@@ -8,7 +8,7 @@ const {connection}=require("./Medels/AuthenticationModel")
 const { authRouter } = require('./Controls/loginstystem')
 const {  profileRouter } = require('./Controls/controlsystem')
 
-const { assignmentRouter } = require('./Controls/assignmentControl')
+const { assignmentRouter, assignmentRouterfunction } = require('./Controls/assignmentControl')
 const app=express()
 
 
@@ -36,14 +36,14 @@ io.on('connection', (socket) => {
   });
  
 });
-io.emit('new-assignment', { assignment:"a new assignment added" });
+
 //
 // |||||||||||||||||||||||||||
 app.get("/",async(req,res)=>{
     res.status(200).json({msg:"Welcome To The YakshAcademy Backend"})
 })
 app.use("/user",authRouter)
-app.use("/assignment",auth,assignmentRouter)
+app.use("/assignment",auth,assignmentRouterfunction(io))
 
 app.use("/userdata",auth,profileRouter)
 server.listen(8080,async()=>{
@@ -56,4 +56,3 @@ server.listen(8080,async()=>{
     console.log("port is running fine at port no.8080")
 })
 
-module.exports={server,io}

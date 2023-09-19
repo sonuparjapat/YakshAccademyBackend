@@ -1,20 +1,22 @@
-const express=require("express")
-// const {  io } = require('../index.js');
-const ObjectId = require('mongodb').ObjectId;
-const { instructerassignmentModel } = require("../Medels/instructerAssignment")
-const { studentProfileModel } = require("../Medels/studentProfileMoedel")
-const { studentassignemntModel } = require("../Medels/studentassignementMoel")
-const assignmentRouter=express.Router()
 
 
+
+const assignmentRouterfunction=(io)=>{
+    const express=require("express")
+   
+    
+    const { instructerassignmentModel } = require("../Medels/instructerAssignment")
+    const { studentProfileModel } = require("../Medels/studentProfileMoedel")
+    const { studentassignemntModel } = require("../Medels/studentassignementMoel")
+    const assignmentRouter=express.Router()
 assignmentRouter.post("/instructerassignment",async(req,res)=>{
     const newdata={...req.body,status:false}
  try{
 const data=new instructerassignmentModel(newdata)
 await data.save()
-console.log(data)
+// console.log(data)
 
-
+io.emit('new-assignment', { assignment: data });
 res.status(200).json({msg:"You added a new assignment successfully"})
  }catch(err){
     res.status(400).json({msg:"something going wrong"})
@@ -294,6 +296,9 @@ const formattedCurrentDate = `${year}-${month}-${day}`;
         res.status(400).json({msg:"Something going wrong"})
     }
 })
+return assignmentRouter
+
+}
 
 
 
@@ -302,7 +307,4 @@ const formattedCurrentDate = `${year}-${month}-${day}`;
 
 
 
-
-
-
-module.exports={assignmentRouter}
+module.exports={assignmentRouterfunction}
