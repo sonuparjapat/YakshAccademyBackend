@@ -1,5 +1,7 @@
 const express=require('express')
 const cors=require("cors")
+const http = require('http'); // Import the HTTP module
+const socketIo = require('socket.io'); // Import Socket.io
 const {auth}=require("./Middleware/auth")
 const {connection}=require("./Medels/AuthenticationModel")
 const { authRouter } = require('./Controls/loginstystem')
@@ -9,6 +11,32 @@ const { assignmentRouter } = require('./Controls/assignmentControl')
 const app=express()
 app.use(cors())
 app.use(express.json())
+
+// Create an HTTP server
+ const server = http.createServer(app);
+
+// Initialize Socket.io
+const io = socketIo(server);
+
+// Set up a WebSocket connection
+io.on('connection', (socket) => {
+  console.log('A user connected');
+
+  // Handle disconnection
+  socket.on('disconnect', () => {
+    console.log('User disconnected');
+  });
+});
+
+
+
+
+
+
+
+
+
+
 // |||||||||||||||||||||||||||
 app.get("/",async(req,res)=>{
     res.status(200).json({msg:"Welcome To The YakshAcademy Backend"})
@@ -17,7 +45,7 @@ app.use("/user",authRouter)
 app.use("/assignment",auth,assignmentRouter)
 
 app.use("/userdata",auth,profileRouter)
-app.listen(8080,async()=>{
+server.listen(8080,async()=>{
    try{
 
    await connection
@@ -26,3 +54,5 @@ app.listen(8080,async()=>{
     }
     console.log("port is running fine at port no.8080")
 })
+
+module.exports={server,io}
