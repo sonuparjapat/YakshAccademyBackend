@@ -12,10 +12,24 @@ const app=express()
 app.use(cors())
 app.use(express.json())
 
-// Create an HTTP server
- const server = http.createServer(app);
 
-// Initialize Socket.io
+// |||||||||||||||||||||||||||
+app.get("/",async(req,res)=>{
+    res.status(200).json({msg:"Welcome To The YakshAcademy Backend"})
+})
+app.use("/user",authRouter)
+app.use("/assignment",auth,assignmentRouter)
+
+app.use("/userdata",auth,profileRouter)
+const server=app.listen(8080,async()=>{
+   try{
+
+   await connection
+    console.log("connected to database ") }catch(err){
+        console.log(err)
+    }
+    console.log("port is running fine at port no.8080")
+})
 const io = socketIo(server);
 
 // Set up a WebSocket connection
@@ -27,32 +41,4 @@ io.on('connection', (socket) => {
     console.log('User disconnected');
   });
 });
-
-
-
-
-
-
-
-
-
-
-// |||||||||||||||||||||||||||
-app.get("/",async(req,res)=>{
-    res.status(200).json({msg:"Welcome To The YakshAcademy Backend"})
-})
-app.use("/user",authRouter)
-app.use("/assignment",auth,assignmentRouter)
-
-app.use("/userdata",auth,profileRouter)
-server.listen(8080,async()=>{
-   try{
-
-   await connection
-    console.log("connected to database ") }catch(err){
-        console.log(err)
-    }
-    console.log("port is running fine at port no.8080")
-})
-
 module.exports={server,io}
