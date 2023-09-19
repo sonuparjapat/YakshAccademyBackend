@@ -219,7 +219,7 @@ assignmentRouter.get("/submittedassignment/:assignmentId",async(req,res)=>{
             res.status(400).json({msg:"something going wrong"})
         }
     }else{
-res.status(200).json({msg:"No Submitted yet"})
+res.status(200).json({msg:false})
     }
 })
 // status completion
