@@ -9,7 +9,12 @@ const {  profileRouter } = require('./Controls/controlsystem')
 
 const { assignmentRouter } = require('./Controls/assignmentControl')
 const app=express()
-app.use(cors())
+const corsOptions = {
+    origin: 'http://your-frontend-domain.com', // Replace with your frontend's actual domain
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true, // Enable credentials (cookies, headers) if needed
+  };
+app.use(cors(corsOptions))
 app.use(express.json())
 
 //
