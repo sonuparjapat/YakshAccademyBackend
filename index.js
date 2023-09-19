@@ -34,7 +34,9 @@ io.on('connection', (socket) => {
   socket.on('connect_error', (error) => {
     console.error('WebSocket connection error:', error);
   });
+ 
 });
+io.emit('new-assignment', { assignment:"a new assignment added" });
 //
 // |||||||||||||||||||||||||||
 app.get("/",async(req,res)=>{
