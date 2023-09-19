@@ -1,7 +1,10 @@
+
+
 const express=require('express')
 const cors=require("cors")
-const http = require('http'); // Import the HTTP module
-const socketIo = require('socket.io'); // Import Socket.io
+
+const {Server}=require("socket.io")
+const {createServer}=require("http")
 const {auth}=require("./Middleware/auth")
 const {connection}=require("./Medels/AuthenticationModel")
 const { authRouter } = require('./Controls/loginstystem')
@@ -13,13 +16,11 @@ const app=express()
 
 app.use(cors())
 app.use(express.json())
-const server = http.createServer(app);
-const io = socketIo(server, {
+const httpServer = createServer();
+const io = new Server(httpServer, {
     cors: {
-      origin: 'http://localhost:3000', // Replace with your frontend's URL
-      methods: ['GET', 'POST'],
-      credentials: true, // If needed
-    },
+      origin: "http://localhost:3000"
+    }
   });
 
 // Set up a WebSocket connection
@@ -40,7 +41,7 @@ app.use("/user",authRouter)
 app.use("/assignment",auth,assignmentRouter)
 
 app.use("/userdata",auth,profileRouter)
-server.listen(8080,async()=>{
+httpServer.listen(8080,async()=>{
    try{
 
    await connection
@@ -50,4 +51,4 @@ server.listen(8080,async()=>{
     console.log("port is running fine at port no.8080")
 })
 
-module.exports={server,io}
+module.exports={httpServer,io}
