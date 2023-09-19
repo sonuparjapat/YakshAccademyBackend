@@ -13,7 +13,7 @@ assignmentRouter.post("/instructerassignment",async(req,res)=>{
 const data=new instructerassignmentModel(newdata)
 await data.save()
 console.log(data)
-// io.emit('new-assignment', { assignment: data });
+io.emit('new-assignment', { assignment: data });
 
 res.status(200).json({msg:"You added a new assignment successfully"})
  }catch(err){
