@@ -1,5 +1,5 @@
 const express=require("express")
-const { server, io } = require('../index.js');
+const {  io } = require('../index.js');
 const ObjectId = require('mongodb').ObjectId;
 const { instructerassignmentModel } = require("../Medels/instructerAssignment")
 const { studentProfileModel } = require("../Medels/studentProfileMoedel")
@@ -12,7 +12,9 @@ assignmentRouter.post("/instructerassignment",async(req,res)=>{
  try{
 const data=new instructerassignmentModel(newdata)
 await data.save()
+
 io.emit('new-assignment', { assignment: data });
+
 res.status(200).json({msg:"You added a new assignment successfully"})
  }catch(err){
     res.status(400).json({msg:"something going wrong"})

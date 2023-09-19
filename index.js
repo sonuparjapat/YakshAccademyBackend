@@ -9,10 +9,11 @@ const {  profileRouter } = require('./Controls/controlsystem')
 
 const { assignmentRouter } = require('./Controls/assignmentControl')
 const app=express()
-const server=http.createServer(app)
+
 
 app.use(cors())
 app.use(express.json())
+const server = http.createServer(app);
 const io = socketIo(server, {
     cors: {
       origin: 'http://localhost:3000', // Replace with your frontend's URL
