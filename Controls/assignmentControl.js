@@ -1,3 +1,5 @@
+const { loginmodel } = require("../Medels/AuthenticationModel")
+const { notificationsModel } = require("../Medels/NoificationModel")
 
 
 
@@ -16,6 +18,30 @@ const data=new instructerassignmentModel(newdata)
 await data.save()
 // console.log(data)
 
+const students=await loginmodel.find({type:"student" ,field:req.body.field})
+const currentDate = new Date();
+const notificationdata=students.map((student)=>{
+const notification=new notificationsModel({
+    msg:"A new asssignment added by instructer",
+    sender:req.body.instructername,
+    instructerId:req.body.userId,
+    field:req.body.field,
+    
+    reciever:student._id,
+    assignmentname:req.body.name,
+    createdAt:currentDate,
+    isRead:false,
+    instructer:data._id
+})
+return notification.save()
+
+
+})
+await Promise.all(notificationdata)
+
+
+
+
 io.emit('new-assignment', { assignment: data });
 res.status(200).json({msg:"You added a new assignment successfully"})
  }catch(err){
@@ -24,6 +50,17 @@ res.status(200).json({msg:"You added a new assignment successfully"})
 
 
 })
+
+
+
+
+
+
+
+
+
+
+
 assignmentRouter.get("/allinstructerassignment",async(req,res)=>{
 const {date,deadline,name,limit,page,order,sort}=req.query
 // console.log(req.query)
@@ -137,6 +174,49 @@ assignmentRouter.patch("/patchassignment/:id",async(req,res)=>{
 
 
 // studentsidemanagement************************************************************************************************
+// getting notifications ...............................
+
+
+assignmentRouter.get("/notifications",async(req,res)=>{
+    const {userId}=req.body
+    const data=await loginmodel.findOne({_id:userId})
+    // console.log(data)
+    // console.log(userId)
+    if(data){
+
+    
+    try{
+        // const mydata=await notificationsModel.find()
+        // console.log(mydata)
+        const notificationdata=await notificationsModel.find({reciever:userId,isRead:false,field:data.field}).populate("instructer")
+        console.log(notificationdata)
+        res.status(200).json({msg:notificationdata})
+    }catch(err){
+        res.status(400).json({msg:"something going wrong",err:err.error})
+    }}else{
+        res.status(400).json({msg:"Not a Registerd user"})
+    }
+})
+
+// assignmentMark as read
+assignmentRouter.patch("/notifications/patch",async(req,res)=>{
+    const {userId}=req.body
+    const data=await loginmodel.findOne({_id:userId})
+    try{
+await notificationsModel.updateMany({reciever:userId,isRead:false,field:data.field},{isRead:true})
+res.status(200).json({msg:"Marked As Read"})
+    }catch(err){
+        res.status(400).json({msg:"something going wrong"})
+    }
+})
+
+
+
+
+
+
+
+
 
 assignmentRouter.get("/getassignments",async(req,res)=>{
 const {userId}=req.body
