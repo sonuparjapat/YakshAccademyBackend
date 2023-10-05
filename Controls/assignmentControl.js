@@ -201,7 +201,7 @@ assignmentRouter.get("/notifications",async(req,res)=>{
 assignmentRouter.get("/notifications/:id",async(req,res)=>{
     const {id}=req.params
 try{
-const singledata=await notificationsModel.findOne({"_id":id})
+const singledata=await notificationsModel.findOne({"_id":id}).populate("instructer")
 res.status(200).json({msg:singledata})
 }catch(err){
     res.status(400).json({msg:"Something going wrong"})
