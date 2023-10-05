@@ -189,7 +189,7 @@ assignmentRouter.get("/notifications",async(req,res)=>{
         // const mydata=await notificationsModel.find()
         // console.log(mydata)
         const notificationdata=await notificationsModel.find({reciever:userId,isRead:false,field:data.field}).populate("instructer")
-        console.log(notificationdata)
+        // console.log(notificationdata)
         res.status(200).json({msg:notificationdata})
     }catch(err){
         res.status(400).json({msg:"something going wrong",err:err.error})
@@ -197,7 +197,17 @@ assignmentRouter.get("/notifications",async(req,res)=>{
         res.status(400).json({msg:"Not a Registerd user"})
     }
 })
+// get singlenotidetails
+assignmentRouter.get("/notifications/:id",async(req,res)=>{
+    const {id}=req.params
+try{
+const singledata=await notificationsModel.findOne({"_id":id})
+res.status(200).json({msg:singledata})
+}catch(err){
+    res.status(400).json({msg:"Something going wrong"})
+}
 
+})
 // assignmentMark as read
 assignmentRouter.patch("/notifications/patch",async(req,res)=>{
     const {userId}=req.body
