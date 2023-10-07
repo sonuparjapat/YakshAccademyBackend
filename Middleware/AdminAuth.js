@@ -19,3 +19,4 @@ try{
         res.status(400).json({msg:"Please Login first"})
     }
 }
+module.exports={adminAuth}

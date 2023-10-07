@@ -10,6 +10,7 @@ const {  profileRouter } = require('./Controls/controlsystem')
 
 const { assignmentRouter, assignmentRouterfunction } = require('./Controls/assignmentControl');
 const { AdminRouter } = require('./Controls/AdminControls');
+const { adminAuth } = require('./Middleware/AdminAuth');
 const app=express()
 
 
@@ -45,7 +46,7 @@ app.get("/",async(req,res)=>{
 })
 app.use("/user",authRouter)
 app.use("/assignment",auth,assignmentRouterfunction(io))
-app.use("/admin",AdminRouter)
+app.use("/admin",adminAuth,AdminRouter)
 app.use("/userdata",auth,profileRouter)
 server.listen(8080,async()=>{
    try{
