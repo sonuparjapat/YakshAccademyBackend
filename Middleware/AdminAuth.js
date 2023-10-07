@@ -16,7 +16,7 @@ try{
     res.status(400).json({msg:"Something going Wrong!!"})
 }
     }else{
-        res.status(400).json({msg:"Please Login first"})
+        res.status(400).json({msg:"Please Login first/You Are Not authorised!!"})
     }
 }
 module.exports={adminAuth}
