@@ -8,7 +8,8 @@ const {connection}=require("./Medels/AuthenticationModel")
 const { authRouter } = require('./Controls/loginstystem')
 const {  profileRouter } = require('./Controls/controlsystem')
 
-const { assignmentRouter, assignmentRouterfunction } = require('./Controls/assignmentControl')
+const { assignmentRouter, assignmentRouterfunction } = require('./Controls/assignmentControl');
+const { AdminRouter } = require('./Controls/AdminControls');
 const app=express()
 
 
@@ -44,7 +45,7 @@ app.get("/",async(req,res)=>{
 })
 app.use("/user",authRouter)
 app.use("/assignment",auth,assignmentRouterfunction(io))
-
+app.use("/admin",AdminRouter)
 app.use("/userdata",auth,profileRouter)
 server.listen(8080,async()=>{
    try{
