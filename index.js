@@ -46,7 +46,7 @@ app.get("/",async(req,res)=>{
 })
 app.use("/user",authRouter)
 app.use("/assignment",auth,assignmentRouterfunction(io))
-app.use("/admin",adminAuth,AdminRouter)
+app.use("/admin",AdminRouter)
 app.use("/userdata",auth,profileRouter)
 server.listen(8080,async()=>{
    try{
