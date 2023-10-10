@@ -35,7 +35,7 @@ AdminRouter.post("/login",async(req,res)=>{
             bcrypt.compare(password, admindata.password, function(err, result) {
               if(result){
                 var token = jwt.sign({ adminId:admindata._id }, 'masai',{ expiresIn: '1h' });
-                res.status(200).json({msg:"Login Successfully",adminname:admindata.name,adminemail:admindata.email,admintoken:token})
+                res.status(200).json({msg:"Login Successfully",adminname:admindata.name,adminemail:admindata.email,admintoken:token,adminId:admindata.Id})
               }else{
                 res.status(400).json({msg:"Password Mismatch!!"})
               }
