@@ -30,12 +30,16 @@ AdminRouter.post("/register",async(req,res)=>{
 AdminRouter.post("/login",async(req,res)=>{
     const {email,password}=req.body
     const admindata=await AdminModel.findOne({email})
+    const alldata=await loginmodel.find()
+
+    // console.log(email)
+    // console.log(admindata)
     if(admindata){
         try{
             bcrypt.compare(password, admindata.password, function(err, result) {
               if(result){
                 var token = jwt.sign({ adminId:admindata._id }, 'masai',{ expiresIn: '1h' });
-                res.status(200).json({msg:"Login Successfully",adminname:admindata.name,adminemail:admindata.email,admintoken:token,adminId:admindata.Id})
+                res.status(200).json({msg:"Login Successfully",adminname:admindata.name,adminemail:admindata.email,admintoken:token,adminId:admindata.Id,alldata:alldata.length})
               }else{
                 res.status(400).json({msg:"Password Mismatch!!"})
               }
