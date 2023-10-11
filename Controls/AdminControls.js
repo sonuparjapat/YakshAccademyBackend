@@ -39,6 +39,7 @@ const fullstackstudents=await loginmodel.find({"field":"fullstack"})
 const frontendinstructers=await loginmodel.find({"type":"instructer","field":"frontend"})
 const backendinstructers=await loginmodel.find({"type":"instructer","field":"backend"})
 const fullstackinstructers=await loginmodel.find({"type":"instructer","field":"fullstack"})
+const admins=await AdminModel.find()
     // console.log(email)
     // console.log(admindata)
     if(admindata){
@@ -49,7 +50,7 @@ const fullstackinstructers=await loginmodel.find({"type":"instructer","field":"f
                 res.status(200).json({msg:"Login Successfully",adminname:admindata.name,adminemail:admindata.email,admintoken:token,adminId:admindata.Id,
                 alldata:alldata.length,"studentscount":students.length,instructerscount:instructer.length,"frontendstudentscount":frontendstudents.length,backendstudentscount:backendstudents.length,fullstackstudentscount:fullstackstudents.length,
             frontendinstructerscount:frontendinstructers.length,backendinstructerscount:backendinstructers.length,fullstackinstructerscount:fullstackinstructers.length,
-      students,instructer,frontendinstructers,backendinstructers,fullstackinstructers,frontendstudents,backendstudents,fullstackstudents})
+      students,instructer,frontendinstructers,backendinstructers,fullstackinstructers,frontendstudents,backendstudents,fullstackstudents,admins})
               }else{
                 res.status(400).json({msg:"Password Mismatch!!"})
               }
