@@ -9,9 +9,11 @@ AdminRouter.post("/register",async(req,res)=>{
     const {name,Id,email,password}=req.body
 
     const already=await AdminModel.findOne({email})
+    const searchbyid=await AdminModel.findOne({Id})
     if(already){
         res.status(400).json({msg:"This User Is Already Registered"})
-    }else{
+    }else if(searchbyid){
+        res.status(400).json({msg:"Id is Already Present"})}else{
         try{
             bcrypt.hash(password, 5, async(err, hash)=> {
             if(err){
