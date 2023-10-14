@@ -99,4 +99,13 @@ AdminRouter.post("/user/register",async(req,res)=>{
         }
     
 })
+AdminRouter.delete("/removeadmin/:id",async(req,res)=>{
+    const {id}=req.params
+try{
+    await AdminModel.findOneAndDelete({"_id":id})
+    res.status(200).json({msg:"Admin Removed Successfully"})
+}catch(err){
+    res.status(400).json({msg:"Something going wrong"})
+}
+})
 module.exports={AdminRouter}
