@@ -42,6 +42,7 @@ io.on('connection', (socket) => {
 
 //
 // |||||||||||||||||||||||||||
+// Homepate
 app.get("/",async(req,res)=>{
     res.status(200).json({msg:"Welcome To The YakshAcademy Backend"})
 })
