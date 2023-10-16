@@ -65,11 +65,29 @@ AdminRouter.post("/user/register",async(req,res)=>{
 })
 
 AdminRouter.get("/admins",async(req,res)=>{
+
+   
     try{
 const admindata=await AdminModel.find()
 res.status(200).json({msg:admindata})
     }catch(err){
         res.status(400).json({msg:"something going wrong"})
+    }
+})
+AdminRouter.get("/students",async(req,res)=>{
+    try{
+        const studentsdata=await loginmodel.find({"type":"student"})
+        res.status(200).json({msg:studentsdata})
+    }catch(err){
+        res.status(400).json({msg:"something going wrong"})
+    }
+})
+AdminRouter.get("/instructers",async(req,res)=>{
+    try{
+        const instructerdata=await loginmodel.find({"type":"instructer"})
+res.status(200).json({Msg:instructerdata})
+    }catch(err){
+        res.status(400).json({msg:'something going wrong'})
     }
 })
 AdminRouter.delete("/removeadmin/:id",async(req,res)=>{
