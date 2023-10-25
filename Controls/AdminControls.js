@@ -75,17 +75,66 @@ res.status(200).json({msg:admindata})
     }
 })
 AdminRouter.get("/students",async(req,res)=>{
+const {name,limit,page,order,sort,unqId,field,email}=req.query
+
+    const query={}
+    if(name){
+        query.name={ $regex: name, $options: "i" }
+    }
+    if(unqId){
+        query.unqId={ $regex: unqId, $options: "i" }
+    }
+    if(field){
+        query.field={ $regex: field, $options: "i" }
+    }
+    if(email){
+        query.email={ $regex: email, $options: "i" }
+    }
+
     try{
-        const studentsdata=await loginmodel.find({"type":"student"})
-        res.status(200).json({msg:studentsdata})
+        const alldata=await loginmodel.find({"type":"student"})
+        if(limit&&page){
+            const studentsdata=await loginmodel.find({"type":"student"}).sort({[sort]:order=="asc"?"1":order=="desc"?"-1":""}).skip(
+          (page-1)*limit       
+            ).limit(limit)
+            res.status(200).json({msg:studentsdata,totalpage:Math.ceil(alldata.length/limit)})
+        }else{
+            const studentsdata=await loginmodel.find({"type":"student"}).sort({[sort]:order=="asc"?"1":order=="desc"?"-1":""})
+            res.status(400).json({msg:studentsdata})
+        }
+       
     }catch(err){
         res.status(400).json({msg:"something going wrong"})
     }
 })
 AdminRouter.get("/instructers",async(req,res)=>{
+    const {name,limit,page,order,sort,unqId,field,email}=req.query
+
+    const query={}
+    if(name){
+        query.name={ $regex: name, $options: "i" }
+    }
+    if(unqId){
+        query.unqId={ $regex: unqId, $options: "i" }
+    }
+    if(field){
+        query.field={ $regex: field, $options: "i" }
+    }
+    if(email){
+        query.email={ $regex: email, $options: "i" }
+    }
+
     try{
-        const instructerdata=await loginmodel.find({"type":"instructer"})
-res.status(200).json({Msg:instructerdata})
+        const alldata=await loginmodel.find({"type":"instructer"})
+        if(limit&&page){
+            const instdata=await loginmodel.find({"type":"instructer"}).sort({[sort]:order=="asc"?"1":order=="desc"?"-1":""}).skip(
+          (page-1)*limit       
+            ).limit(limit)
+            res.status(200).json({msg:instdata,totalpage:Math.ceil(alldata.length/limit)})
+        }else{
+            const instdata=await loginmodel.find({"type":"instructer"}).sort({[sort]:order=="asc"?"1":order=="desc"?"-1":""})
+            res.status(400).json({msg:instdata})
+        }
     }catch(err){
         res.status(400).json({msg:'something going wrong'})
     }
