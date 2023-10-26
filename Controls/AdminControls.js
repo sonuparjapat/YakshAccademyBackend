@@ -76,7 +76,7 @@ res.status(200).json({msg:admindata})
 })
 AdminRouter.get("/students",async(req,res)=>{
 const {name,limit,page,order,sort,unqId,field,email}=req.query
-
+console.log("hi")
     const query={}
     if(name){
         query.name={ $regex: name, $options: "i" }
@@ -93,6 +93,7 @@ const {name,limit,page,order,sort,unqId,field,email}=req.query
 
     try{
         const alldata=await loginmodel.find({"type":"student"})
+        // console.log(alldata)
         if(limit&&page){
             const studentsdata=await loginmodel.find({"type":"student"}).sort({[sort]:order=="asc"?"1":order=="desc"?"-1":""}).skip(
           (page-1)*limit       
@@ -100,7 +101,8 @@ const {name,limit,page,order,sort,unqId,field,email}=req.query
             res.status(200).json({msg:studentsdata,totalpage:Math.ceil(alldata.length/limit)})
         }else{
             const studentsdata=await loginmodel.find({"type":"student"}).sort({[sort]:order=="asc"?"1":order=="desc"?"-1":""})
-            res.status(400).json({msg:studentsdata})
+            // console.log(studentsdata)
+            res.status(200).json({msg:studentsdata})
         }
        
     }catch(err){
