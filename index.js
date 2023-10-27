@@ -12,6 +12,7 @@ const { assignmentRouter, assignmentRouterfunction } = require('./Controls/assig
 const { AdminRouter } = require('./Controls/AdminControls');
 const { adminAuth } = require('./Middleware/AdminAuth');
 const { AdminLoginRouter } = require('./Controls/AdminControlLogin');
+const { ticketRouterfunction } = require('./Controls/TicketControl');
 const app=express()
 
 
@@ -48,6 +49,9 @@ app.get("/",async(req,res)=>{
 })
 app.use("/user",authRouter)
 app.use("/assignment",auth,assignmentRouterfunction(io))
+
+// ticketrouter
+app.use("/tickets",auth,ticketRouterfunction(io))
 app.use("/adminlogin",AdminLoginRouter)
 app.use("/admin",adminAuth, AdminRouter)
 app.use("/userdata",auth,profileRouter)
