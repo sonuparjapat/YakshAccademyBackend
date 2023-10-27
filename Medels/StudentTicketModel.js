@@ -7,7 +7,8 @@ const studentticketSchema=mongoose.Schema({
     field:String,
     unqId:String,
     userId:String,
-    reply:String
+    reply:String,
+    studentisRead:Boolean
 })
 
 const studentticketModel=mongoose.model("studenttickets",studentticketSchema)
